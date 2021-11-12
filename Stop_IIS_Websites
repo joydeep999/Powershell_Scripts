@@ -1,0 +1,20 @@
+#This Script will stop the Websites running on IIS on all the servers specified under the "Servernames.txt" file.
+$ServersListFile = '.\Servernames.txt'
+$ServerNamesArray = Get-Content $ServersListFile
+foreach ($server in $ServerNamesArray)
+{
+$Command1="Stop-Website 'Website_Name_As_Mentioned_Under_The_IIS_Sites'"
+Invoke-Command -ComputerName $Server {$Args[0]|Invoke-Expression} -ArgumentList $Command1
+echo "Website stopped on the server:$Server"
+}
+
+#If you want to stop multiple websites at once, you can repeat from $Command1 to echo changing the variable name and values from below "echo "Website stopped on the server:$Server""
+#For an instance see below
+
+# $Command1="Stop-Website 'Website_Name_As_Mentioned_Under_The_IIS_Sites'"
+# Invoke-Command -ComputerName $Server {$Args[0]|Invoke-Expression} -ArgumentList $Command1
+# echo "Website stopped on the server:$Server"
+# $Command2="Stop-Website 'Website_Name_As_Mentioned_Under_The_IIS_Sites'"
+# Invoke-Command -ComputerName $Server {$Args[0]|Invoke-Expression} -ArgumentList $Command2
+# echo "Website stopped on the server:$Server"
+# $Command3....
